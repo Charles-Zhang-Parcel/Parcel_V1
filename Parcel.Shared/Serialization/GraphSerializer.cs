@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
 
@@ -42,16 +43,16 @@ namespace Parcel.Shared.Serialization
                 Nodes = nodes,
                 Connections = connections
             };
-            Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            new BinaryFormatter().Serialize(stream, graph);  
-            stream.Close();
+            using Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
+            using BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, false);
+            WriteToStream(writer, graph);
         }
         public CanvasSerialization Deserialize(string filePath, NodesCanvas canvas)
         {
             // Load raw graph data
-            Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);  
-            NodeGraph graph = (NodeGraph) new BinaryFormatter().Deserialize(stream);  
-            stream.Close();
+            using Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, false);
+            NodeGraph graph = ReadFromStream(reader);
             
             // Book-keeping structures
             Dictionary<NodeData, BaseNode> nodeMapping = new Dictionary<NodeData, BaseNode>();
@@ -81,6 +82,32 @@ namespace Parcel.Shared.Serialization
                 Connections = connections
             };
             return loaded;
+        }
+        #endregion
+
+        #region Binary Serialization
+        private void WriteToStream(BinaryWriter writer, NodeGraph graph)
+        {
+            writer.Write(graph.Version);
+            writer.Write(graph.Title);
+            writer.Write(graph.Author);
+            writer.Write(graph.Description);
+            writer.Write(graph.CreationTime.ToString("yyyy-MM-dd"));
+            writer.Write(graph.UpdateTime.ToString("yyyy-MM-dd"));
+            writer.Write(graph.Revision);
+
+            writer.Write(graph.Nodes.Count);
+            foreach (NodeData node in graph.Nodes)
+            {
+                writer.Write(node.NodeType);
+                writer.Write(node.NodeMembers.Count());
+                foreach (var member in node.NodeMembers)
+                    throw new NotImplementedException();
+            }
+        }
+        private NodeGraph ReadFromStream(BinaryReader reader)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
