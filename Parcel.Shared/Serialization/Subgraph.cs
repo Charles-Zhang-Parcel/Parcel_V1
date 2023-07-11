@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Parcel.Shared.Algorithms;
-using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.Advanced;
 using Parcel.Shared.Framework.ViewModels;
 

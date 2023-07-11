@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
@@ -101,7 +100,7 @@ namespace Parcel.Shared.Serialization
             {
                 writer.Write(node.NodeType);
                 writer.Write(node.NodeMembers.Count());
-                foreach (var member in node.NodeMembers)
+                foreach (KeyValuePair<string, object> member in node.NodeMembers)
                     throw new NotImplementedException();
             }
         }

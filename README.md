@@ -1,2 +1,3 @@
 # Parcel
-Excel+.
+
+Visual programming for data pipeline automation on local PC.
