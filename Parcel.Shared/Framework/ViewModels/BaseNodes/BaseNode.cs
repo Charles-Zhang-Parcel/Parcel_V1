@@ -8,10 +8,10 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
 {
     public class NodeSerializationRoutine
     {
-        public Func<object> Serialize { get; set; }
-        public Action<object> Deserialize { get; set; }
+        public Func<byte[]> Serialize { get; set; }
+        public Action<byte[]> Deserialize { get; set; }
 
-        public NodeSerializationRoutine(Func<object> serialize, Action<object> deserialize)
+        public NodeSerializationRoutine(Func<byte[]> serialize, Action<byte[]> deserialize)
         {
             Serialize = serialize;
             Deserialize = deserialize;
@@ -46,26 +46,28 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
         internal NodeData Serialize()
         {
             // Instance members
-            Dictionary<string, object> members = MemberSerialization.ToDictionary(ms => ms.Key, ms => ms.Value.Serialize());
+            Dictionary<string, byte[]> members = MemberSerialization.ToDictionary(ms => ms.Key, ms => ms.Value.Serialize());
             // Base members
-            members[nameof(Location)] = _location;
+            members[nameof(Location)] = SerializationHelper.Serialize(_location);
 
             return new NodeData()
             {
-                NodeType = this.GetType().AssemblyQualifiedName,
-                NodeMembers = members 
+                NodeType = GetType().AssemblyQualifiedName,
+                NodeMembers = members.Select(m => (m.Key, m.Value)).ToArray()
             };
         }
 
-        internal void Deserialize(Dictionary<string, object> members, NodesCanvas canvas)
+        internal void Deserialize((string Key, byte[] Value)[] tuples, NodesCanvas canvas)
         {
+            Dictionary<string, byte[]> members = tuples.ToDictionary(t => t.Key, t => t.Value);
+
             // Base members
-            this.Graph = canvas;
-            _location = (Vector2D)members[nameof(Location)];
+            Graph = canvas;
+            _location = SerializationHelper.GetVector2D(members[nameof(Location)]);
             
             // Instance members
             Dictionary<string, NodeSerializationRoutine> instanceMembers = MemberSerialization;
-            foreach ((string key, object data) in members)
+            foreach ((string key, byte[] data) in members)
             {
                 if(instanceMembers.ContainsKey(key))
                     instanceMembers[key].Deserialize(data);

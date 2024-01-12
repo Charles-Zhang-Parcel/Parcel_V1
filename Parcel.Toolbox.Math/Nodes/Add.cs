@@ -26,12 +26,12 @@ namespace Parcel.Toolbox.Math.Nodes
             {
                 {
                     nameof(_number1Input),
-                    new NodeSerializationRoutine(() => _number1Input.DefaultDataStorage,
+                    new NodeSerializationRoutine(() => SerializationHelper.Serialize(_number1Input.DefaultDataStorage),
                         o => _number1Input.DefaultDataStorage = o)
                 },
                 {
                     nameof(_number2Input),
-                    new NodeSerializationRoutine(() => _number2Input.DefaultDataStorage,
+                    new NodeSerializationRoutine(() => SerializationHelper.Serialize(_number2Input.DefaultDataStorage),
                         o => _number2Input.DefaultDataStorage = o)
                 },
             };

@@ -1,4 +1,5 @@
 ﻿using Parcel.Shared.DataTypes;
+using Parcel.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -11,9 +12,9 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
         {
             MemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Title), new NodeSerializationRoutine(() => _title, value => _title = value as string)},
-                {nameof(Comment), new NodeSerializationRoutine(() => _comment, value => _comment = value as string)},
-                {nameof(Size), new NodeSerializationRoutine(() => _size, value => _size = (Vector2D)value)},
+                {nameof(Title), new NodeSerializationRoutine(() => SerializationHelper.Serialize(_title), value => _title = SerializationHelper.GetString(value))},
+                {nameof(Comment), new NodeSerializationRoutine(() => SerializationHelper.Serialize(_comment), value => _comment = SerializationHelper.GetString(value))},
+                {nameof(Size), new NodeSerializationRoutine(() => SerializationHelper.Serialize(_size), value => _size = SerializationHelper.GetVector2D(value))},
             };
         }
         #endregion

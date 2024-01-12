@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Parcel.Shared.Serialization;
 using System.Collections.Generic;
 
 namespace Parcel.Shared.Framework.ViewModels.BaseNodes
@@ -23,7 +23,7 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Value), new NodeSerializationRoutine( () => _value, value => _value = value as string)}
+                {nameof(Value), new NodeSerializationRoutine( () => SerializationHelper.Serialize(_value), value => _value = SerializationHelper.GetString(value))}
             };
             
             Output.Add(ValueOutput);

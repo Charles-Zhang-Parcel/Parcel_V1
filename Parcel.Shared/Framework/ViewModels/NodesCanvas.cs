@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
@@ -95,8 +94,8 @@ namespace Parcel.Shared.Framework.ViewModels
         {
             new GraphSerializer().Serialize(path, new CanvasSerialization()
             {
-                Nodes = this.Nodes.ToList(),
-                Connections = this.Connections.ToList()
+                Nodes = Nodes.ToList(),
+                Connections = Connections.ToList()
             });
         }
         #endregion

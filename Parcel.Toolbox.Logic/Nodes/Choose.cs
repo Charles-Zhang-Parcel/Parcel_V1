@@ -21,7 +21,7 @@ namespace Parcel.Toolbox.Logic.Nodes
         };
         public Choose()
         {
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => Input.Count - 1, o =>
+            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count - 1), o =>
             {
                 Input.Clear();
                 Input.Add(_selectorInput);

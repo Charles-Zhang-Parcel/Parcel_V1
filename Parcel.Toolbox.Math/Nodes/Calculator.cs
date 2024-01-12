@@ -16,7 +16,7 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Value), new NodeSerializationRoutine( () => _value, value => _value = value as string)}
+                {nameof(Value), new NodeSerializationRoutine( () => _value, value => _value = SerializationHelper.GetString(value))}
             };
             
             Title = NodeTypeName = "Calculator";

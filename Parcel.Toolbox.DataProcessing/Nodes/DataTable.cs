@@ -42,7 +42,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             // Serialization
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Data), new NodeSerializationRoutine(() => Data, o => Data = o as object[][])},
+                {nameof(Data), new NodeSerializationRoutine(() => SerializationHelper.Serialize(Data), o => Data = o as object[][])},
             };
             VariantInputConnectorsSerialization = new NodeSerializationRoutine(SerializeEntries,
                 source => DeserializeEntries((List<Tuple<string, int>>)source));

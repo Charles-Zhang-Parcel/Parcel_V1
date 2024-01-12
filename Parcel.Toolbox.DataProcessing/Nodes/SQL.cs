@@ -43,9 +43,9 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             // Serialization
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Code), new NodeSerializationRoutine(() => Code, o => Code = o as string)}
+                {nameof(Code), new NodeSerializationRoutine(() => SerializationHelper.Serialize(Code), o => Code = o as string)}
             };
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => Input.Count, o =>
+            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count), o =>
             {
                 Input.Clear();
                 int count = (int) o;

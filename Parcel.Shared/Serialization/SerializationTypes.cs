@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
 
 namespace Parcel.Shared.Serialization
 {
-    [Serializable]
-    internal class NodeGraph
-    {
+    internal class NodeGraphData
+    { 
         #region Graph Metadata
         public string Version { get; set; }
         
@@ -21,19 +19,18 @@ namespace Parcel.Shared.Serialization
         #endregion
         
         #region Nodes Data
-        public List<NodeData> Nodes { get; set; }
-        public List<ConnectionData> Connections { get; set; }
+        public NodeData[] Nodes { get; set; }
+        public ConnectionData[] Connections { get; set; }
         #endregion
     }
-    
-    [Serializable]
+
     internal class NodeData
     {
         /// <summary>
         /// Full name of corresponding type
         /// </summary>
         public string NodeType { get; set; }
-        public Dictionary<string, object> NodeMembers { get; set; }
+        public (string Key, byte[] Value)[] NodeMembers { get; set; }
 
         public BaseNode Deserialize(NodesCanvas canvas)
         {
@@ -49,12 +46,11 @@ namespace Parcel.Shared.Serialization
         }
     }
 
-    [Serializable]
     internal class ConnectionData
     {
-        public NodeData Source { get; set; }
+        public int SourceNodeIndex { get; set; }
         public int SourcePin { get; set; }
-        public NodeData Destination { get; set; }
+        public int DestinationNodeIndex { get; set; }
         public int DestinationPin { get; set; }
     }
 }

@@ -29,9 +29,9 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Value), new NodeSerializationRoutine( () => _value, value => _value = value as string)},
+                {nameof(Value), new NodeSerializationRoutine( () => _value, value => _value = SerializationHelper.GetString(value))},
             };
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => Input.Count, o =>
+            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count), o =>
             {
                 Input.Clear();
                 int count = (int) o;

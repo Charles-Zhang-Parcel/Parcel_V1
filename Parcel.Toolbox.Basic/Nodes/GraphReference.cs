@@ -17,7 +17,7 @@ namespace Parcel.Toolbox.Basic.Nodes
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(GraphPath), new NodeSerializationRoutine(() => GraphPath, value => GraphPath = value as string)}
+                {nameof(GraphPath), new NodeSerializationRoutine(() => SerializationHelper.Serialize(GraphPath), value => GraphPath = SerializationHelper.GetString(value))}
             };
             
             Title = NodeTypeName = "Graph Reference";

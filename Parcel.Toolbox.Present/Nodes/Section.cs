@@ -23,7 +23,7 @@ namespace Parcel.Toolbox.Present.Nodes
         };
         public Section()
         {
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => Input.Count, o =>
+            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count), o =>
             {
                 Input.Clear();
                 int count = (int) o;

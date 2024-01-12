@@ -22,7 +22,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         };
         public Extract()
         {
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => Input.Count - 1, o =>
+            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count - 1), o =>
             {
                 Input.Clear();
                 int count = (int) o;
