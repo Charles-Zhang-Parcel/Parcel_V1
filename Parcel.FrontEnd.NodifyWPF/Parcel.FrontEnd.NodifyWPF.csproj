@@ -27,6 +27,7 @@
       <ProjectReference Include="..\Parcel.Toolbox.Generator\Parcel.Toolbox.Generator.csproj" />
       <ProjectReference Include="..\Parcel.Toolbox.Graphing\Parcel.Toolbox.Graphing.csproj" />
       <ProjectReference Include="..\Parcel.Toolbox.Logic\Parcel.Toolbox.Logic.csproj" />
+      <ProjectReference Include="..\Parcel.Toolbox.MachineLearning\Parcel.Toolbox.MachineLearning.csproj" />
       <ProjectReference Include="..\Parcel.Toolbox.Math\Parcel.Toolbox.Math.csproj" />
       <ProjectReference Include="..\Parcel.Toolbox.Plotting\Parcel.Toolbox.Plotting.csproj" />
       <ProjectReference Include="..\Parcel.Toolbox.Present\Parcel.Toolbox.Present.csproj" />

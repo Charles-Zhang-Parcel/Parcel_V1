@@ -25,6 +25,7 @@ namespace Parcel.FrontEnd.NodifyWPF
             _registry.RegisterToolbox("Generator", Assembly.GetAssembly(typeof(Parcel.Toolbox.Generator.ToolboxDefinition)));
             _registry.RegisterToolbox("Graphing", Assembly.GetAssembly(typeof(Parcel.Toolbox.Graphing.ToolboxDefinition)));
             _registry.RegisterToolbox("Logic", Assembly.GetAssembly(typeof(Parcel.Toolbox.Logic.ToolboxDefinition)));
+            _registry.RegisterToolbox("Machine Learning", Assembly.GetAssembly(typeof(Parcel.Toolbox.MachineLearning.ToolboxDefinition)));
             _registry.RegisterToolbox("Math", Assembly.GetAssembly(typeof(Parcel.Toolbox.Math.ToolboxDefinition)));
             _registry.RegisterToolbox("Plotting", Assembly.GetAssembly(typeof(Parcel.Toolbox.Plotting.ToolboxDefinition)));
             _registry.RegisterToolbox("Present", Assembly.GetAssembly(typeof(Parcel.Toolbox.Present.ToolboxDefinition)));
