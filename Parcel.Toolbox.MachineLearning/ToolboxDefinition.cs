@@ -16,7 +16,7 @@ namespace Parcel.Toolbox.MachineLearning
         {
             // GenAI
             new AutomaticNodeDescriptor("ChatGPT 4", new []{CacheDataType.String, CacheDataType.String}, CacheDataType.String,
-                objects => (string)objects[1])
+                objects => (string)"I am ChatGPT, vrsion 4.")
             {
                 InputNames = new[]{ "Endpoint", "Query" },
                 OutputNames = new[]{ "Completion" }
