@@ -51,7 +51,9 @@ namespace Parcel.Shared.DataTypes
                 case CacheDataType.DateTime:
                     return typeof(DateTimeNode);
                 case CacheDataType.ParcelDataGrid:
+                    return typeof(DataGrid);
                 case CacheDataType.Generic:
+                    return typeof(object);
                 case CacheDataType.BatchJob:
                 case CacheDataType.ServerConfig:
                 default:
@@ -73,6 +75,7 @@ namespace Parcel.Shared.DataTypes
                 case CacheDataType.ParcelDataGrid:
                     return typeof(DataGrid);
                 case CacheDataType.Generic:
+                    return typeof(object);
                 case CacheDataType.BatchJob:
                 case CacheDataType.ServerConfig:
                     throw new NotImplementedException();

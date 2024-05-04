@@ -81,6 +81,8 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
                         Input.Add(new InputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
                         break;
                     case CacheDataType.Generic:
+                        Input.Add(new InputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
+                        break;
                     case CacheDataType.BatchJob:
                     case CacheDataType.ServerConfig:
                         throw new NotImplementedException();
