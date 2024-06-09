@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using Parcel.Shared.DataTypes;
 using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Toolbox.DataProcessing.Nodes
 {
@@ -42,15 +44,17 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             // Serialization
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Data), new NodeSerializationRoutine(() => SerializationHelper.Serialize(Data), o => Data = o as object[][])},
+                // TODO: Why do we even need to serialize anything for this node?
+                // {nameof(Data), new NodeSerializationRoutine(() => SerializationHelper.Serialize(Data), o => Data = o as object[][])},
+                {nameof(Data), null},
             };
             VariantInputConnectorsSerialization = new NodeSerializationRoutine(SerializeEntries,
-                source => DeserializeEntries((List<Tuple<string, int>>)source));
+                DeserializeEntries);
             
-            Definitions = new ObservableCollection<DataTableFieldDefinition>()
-            {
-                new DataTableFieldDefinition() {Name = "New Field"}
-            };
+            Definitions =
+            [
+                new DataTableFieldDefinition() { Name = "New Field" }
+            ];
             
             AddEntryCommand = new RequeryCommand(
                 () => Definitions.Add(new DataTableFieldDefinition() {Name = $"New Field {Definitions.Count + 1}"} ),
@@ -133,16 +137,35 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         #endregion
 
         #region Routines
-        private List<Tuple<string, int>> SerializeEntries()
-            => Definitions.Select(def => new Tuple<string, int>(def.Name, (int) def.Type))
-                .ToList();
-        private void DeserializeEntries(IEnumerable<Tuple<string, int>> source)
+        private byte[] SerializeEntries()
         {
+            List<Tuple<string, int>> data = Definitions.Select(def => new Tuple<string, int>(def.Name, (int)def.Type))
+                .ToList();
+
+            var stream = new MemoryStream();
+            var writer = new BinaryWriter(stream);
+            writer.Write(data.Count);
+            foreach (var item in data)
+            {
+                writer.Write(item.Item1);
+                writer.Write(item.Item2);
+            }
+            return stream.ToArray();
+        }
+        private void DeserializeEntries(byte[] entryData)
+        {
+            var stream = new MemoryStream(entryData);
+            var reader = new BinaryReader(stream);
+            int count = reader.ReadInt32();
+            List<Tuple<string, int>> source = [];
+            for (int i = 0; i < count; i++)
+                source.Add(new Tuple<string, int>(reader.ReadString(), reader.ReadInt32()));
+
             Definitions.Clear();
             Definitions.AddRange(source.Select(tuple => new DataTableFieldDefinition()
             {
                 Name = tuple.Item1,
-                Type = (DictionaryEntryType) tuple.Item2
+                Type = (DictionaryEntryType)tuple.Item2
             }));
         }
         #endregion

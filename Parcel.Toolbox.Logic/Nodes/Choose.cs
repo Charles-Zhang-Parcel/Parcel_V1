@@ -5,6 +5,7 @@ using Parcel.Shared.DataTypes;
 using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Toolbox.Logic.Nodes
 {
@@ -25,7 +26,7 @@ namespace Parcel.Toolbox.Logic.Nodes
             {
                 Input.Clear();
                 Input.Add(_selectorInput);
-                int count = (int) o;
+                int count = SerializationHelper.GetInt(o);
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });

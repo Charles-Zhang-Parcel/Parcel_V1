@@ -46,9 +46,10 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         public Dictionary()
         {
             // Serialization
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(SerializeEntries,
-                source => DeserializeEntries((List<Tuple<string, int, object>>)source));
-            
+            // VariantInputConnectorsSerialization = new NodeSerializationRoutine(SerializeEntries,
+            // source => DeserializeEntries((List<Tuple<string, int, object>>)source));
+            VariantInputConnectorsSerialization = null;
+
             Title = NodeTypeName = "Dictionary";
             Output.Add(_dataTableOutput);
 

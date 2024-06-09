@@ -6,6 +6,7 @@ using Parcel.Shared.DataTypes;
 using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Toolbox.DataProcessing.Nodes
 {
@@ -43,12 +44,12 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             // Serialization
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Code), new NodeSerializationRoutine(() => SerializationHelper.Serialize(Code), o => Code = o as string)}
+                {nameof(Code), new NodeSerializationRoutine(() => SerializationHelper.Serialize(Code), o => Code = SerializationHelper.GetString(o))}
             };
             VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count), o =>
             {
                 Input.Clear();
-                int count = (int) o;
+                int count = SerializationHelper.GetInt(o);
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });
