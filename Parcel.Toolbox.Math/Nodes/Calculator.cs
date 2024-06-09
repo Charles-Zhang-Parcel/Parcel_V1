@@ -2,6 +2,7 @@
 using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Toolbox.Math.Nodes
 {
@@ -16,7 +17,7 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Value), new NodeSerializationRoutine( () => _value, value => _value = value as string)}
+                {nameof(Value), new NodeSerializationRoutine( () => SerializationHelper.Serialize(_value), value => _value = SerializationHelper.GetString(value))}
             };
             
             Title = NodeTypeName = "Calculator";

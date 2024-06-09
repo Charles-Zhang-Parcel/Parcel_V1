@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework.ViewModels.Primitives;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Shared.Framework.ViewModels.BaseNodes
 {
@@ -18,12 +17,12 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(AutomaticNodeType), new NodeSerializationRoutine(() => AutomaticNodeType, value => AutomaticNodeType = value as string)},
-                {nameof(ToolboxFullName), new NodeSerializationRoutine(() => ToolboxFullName, value => ToolboxFullName = value as string)},
-                {nameof(InputTypes), new NodeSerializationRoutine(() => InputTypes, value => InputTypes = value as CacheDataType[])},
-                {nameof(OutputTypes), new NodeSerializationRoutine(() => OutputTypes, value => OutputTypes = value as CacheDataType[])},
-                {nameof(InputNames), new NodeSerializationRoutine(() => InputNames, value => InputNames = value as string[])},
-                {nameof(OutputNames), new NodeSerializationRoutine(() => OutputNames, value => OutputNames = value as string[])},
+                {nameof(AutomaticNodeType), new NodeSerializationRoutine(() => SerializationHelper.Serialize(AutomaticNodeType), value => AutomaticNodeType = SerializationHelper.GetString(value))},
+                {nameof(ToolboxFullName), new NodeSerializationRoutine(() => SerializationHelper.Serialize(ToolboxFullName), value => ToolboxFullName = SerializationHelper.GetString(value))},
+                {nameof(InputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputTypes), value => InputTypes = SerializationHelper.GetCacheDataTypes(value))},
+                {nameof(OutputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputTypes), value => OutputTypes = SerializationHelper.GetCacheDataTypes(value))},
+                {nameof(InputNames), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputNames), value => InputNames = SerializationHelper.GetStrings(value))},
+                {nameof(OutputNames), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputNames), value => OutputNames = SerializationHelper.GetStrings(value))},
             };
         }
         public AutomaticProcessorNode(AutomaticNodeDescriptor descriptor, IToolboxEntry toolbox)

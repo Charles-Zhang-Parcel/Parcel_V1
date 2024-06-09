@@ -2,6 +2,7 @@
 using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Toolbox.Math.Nodes
 {
@@ -26,12 +27,12 @@ namespace Parcel.Toolbox.Math.Nodes
             {
                 {
                     nameof(_number1Input),
-                    new NodeSerializationRoutine(() => _number1Input.DefaultDataStorage,
+                    new NodeSerializationRoutine(() => SerializationHelper.Serialize((double)_number1Input.DefaultDataStorage),
                         o => _number1Input.DefaultDataStorage = o)
                 },
                 {
                     nameof(_number2Input),
-                    new NodeSerializationRoutine(() => _number2Input.DefaultDataStorage,
+                    new NodeSerializationRoutine(() => SerializationHelper.Serialize((double)_number2Input.DefaultDataStorage),
                         o => _number2Input.DefaultDataStorage = o)
                 },
             };
@@ -48,7 +49,7 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             double number1 = _number1Input.FetchInputValue<double>();
             double number2 = _number2Input.FetchInputValue<double>();
-            AddParameter parameter = new AddParameter()
+            AddParameter parameter = new()
             {
                 InputNumber1 = number1,
                 InputNumber2 = number2

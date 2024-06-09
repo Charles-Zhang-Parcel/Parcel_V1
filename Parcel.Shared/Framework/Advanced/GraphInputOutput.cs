@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using Parcel.Shared.DataTypes;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Parcel.Shared.Framework.Advanced
 {
@@ -50,7 +52,7 @@ namespace Parcel.Shared.Framework.Advanced
             
             // Serialization
             VariantInputConnectorsSerialization = new NodeSerializationRoutine(SerializeEntries,
-                source => DeserializeEntries((List<Tuple<string, int>>)source)); 
+                source => DeserializeEntries(source)); 
         }
         #endregion
 
@@ -98,11 +100,30 @@ namespace Parcel.Shared.Framework.Advanced
         #endregion
 
         #region Routiens
-        private List<Tuple<string, int>> SerializeEntries()
-            => Definitions.Select(def => new Tuple<string, int>(def.Name, (int) def.Type))
-                .ToList();
-        private void DeserializeEntries(List<Tuple<string, int>> source)
+        private byte[] SerializeEntries()
         {
+            List<Tuple<string, int>> data = Definitions.Select(def => new Tuple<string, int>(def.Name, (int)def.Type))
+                .ToList();
+
+            var stream = new MemoryStream();
+            var writer = new BinaryWriter(stream);
+            writer.Write(data.Count);
+            foreach (var item in data)
+            {
+                writer.Write(item.Item1);
+                writer.Write(item.Item2);
+            }
+            return stream.ToArray();
+        }
+        private void DeserializeEntries(byte[] entryData)
+        {
+            var stream = new MemoryStream(entryData);
+            var reader = new BinaryReader(stream);
+            int count = reader.ReadInt32();
+            List<Tuple<string, int>> source = [];
+            for (int i = 0; i < count; i++)
+                source.Add(new Tuple<string, int>(reader.ReadString(), reader.ReadInt32()));
+
             Definitions.AddRange(source.Select(tuple => new GraphInputOutputDefinition()
             {
                 Name = tuple.Item1,

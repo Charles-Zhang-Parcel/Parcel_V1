@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Parcel.Shared.DataTypes;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Shared.Framework.ViewModels.BaseNodes
 {
@@ -64,8 +65,8 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
         {
             BaseProcessorMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
-                {nameof(Title), new NodeSerializationRoutine(() => _title, value => _title = value as string)},
-                {nameof(IsPreview), new NodeSerializationRoutine(() => _isPreview, value => _isPreview = (bool)value)},
+                {nameof(Title), new NodeSerializationRoutine(() => SerializationHelper.Serialize(_title), value => _title = SerializationHelper.GetString(value))},
+                {nameof(IsPreview), new NodeSerializationRoutine(() => SerializationHelper.Serialize(_isPreview), value => _isPreview = SerializationHelper.GetBool(value))},
             };
             
             Input.WhenAdded(c => c.Node = this)
@@ -133,10 +134,10 @@ namespace Parcel.Shared.Framework.ViewModels.BaseNodes
         #region Serialization
         public sealed override Dictionary<string, NodeSerializationRoutine> MemberSerialization =>
             BaseProcessorMemberSerialization.Select(d => d)
-                .Union(ProcessorNodeMemberSerialization?.Select(d => d) ?? new KeyValuePair<string, NodeSerializationRoutine>[]{})
-                .Union( VariantInputConnectorsSerialization != null 
-                    ? new [] {new KeyValuePair<string, NodeSerializationRoutine>(nameof(VariantInputConnectorsSerialization), VariantInputConnectorsSerialization)}
-                    : new KeyValuePair<string, NodeSerializationRoutine>[]{})
+                .Union(ProcessorNodeMemberSerialization?.Select(d => d) ?? Array.Empty<KeyValuePair<string, NodeSerializationRoutine>>())
+                .Union(VariantInputConnectorsSerialization != null
+                    ? [new KeyValuePair<string, NodeSerializationRoutine>(nameof(VariantInputConnectorsSerialization), VariantInputConnectorsSerialization)]
+                    : Array.Empty<KeyValuePair<string, NodeSerializationRoutine>>())
                 .ToDictionary(d => d.Key, d => d.Value);
         private Dictionary<string, NodeSerializationRoutine> BaseProcessorMemberSerialization { get; }
         protected abstract Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; }

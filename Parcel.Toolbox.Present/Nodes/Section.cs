@@ -7,6 +7,7 @@ using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
 using Parcel.Shared.Framework.ViewModels.Primitives;
+using Parcel.Shared.Serialization;
 
 namespace Parcel.Toolbox.Present.Nodes
 {
@@ -23,10 +24,10 @@ namespace Parcel.Toolbox.Present.Nodes
         };
         public Section()
         {
-            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => Input.Count, o =>
+            VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count), o =>
             {
                 Input.Clear();
-                int count = (int) o;
+                int count = SerializationHelper.GetInt(o);
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });

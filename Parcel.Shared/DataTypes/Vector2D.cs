@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Parcel.Shared.DataTypes
+﻿namespace Parcel.Shared.DataTypes
 {
-    [Serializable]
     public struct Vector2D
     {
         public double X;
