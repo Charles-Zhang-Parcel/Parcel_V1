@@ -31,6 +31,7 @@ namespace Parcel.FrontEnd.NodifyWPF
             _registry.RegisterToolbox("Scripting", Assembly.GetAssembly(typeof(Parcel.Toolbox.Scripting.ToolboxDefinition)));
             _registry.RegisterToolbox("String", Assembly.GetAssembly(typeof(Parcel.Toolbox.String.ToolboxDefinition)));
             _registry.RegisterToolbox("Special", Assembly.GetAssembly(typeof(Parcel.Toolbox.Special.ToolboxDefinition)));
+            _registry.RegisterToolbox("Web Service", Assembly.GetAssembly(typeof(Parcel.Toolbox.WebService.ToolboxDefinition)));
 
             Owner = owner;
             InitializeComponent();

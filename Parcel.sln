@@ -51,6 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parcel.Toolbox.WebService", "Parcel.Toolbox.WebService\Parcel.Toolbox.WebService.csproj", "{784AF2AD-AFA8-4518-9D9B-F381F23C98BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -130,6 +131,10 @@ Global
 		{6C0B01C7-CEAD-41C7-AAF1-BE892877941B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C0B01C7-CEAD-41C7-AAF1-BE892877941B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C0B01C7-CEAD-41C7-AAF1-BE892877941B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{784AF2AD-AFA8-4518-9D9B-F381F23C98BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784AF2AD-AFA8-4518-9D9B-F381F23C98BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784AF2AD-AFA8-4518-9D9B-F381F23C98BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784AF2AD-AFA8-4518-9D9B-F381F23C98BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +158,7 @@ Global
 		{6FD3BC3D-64D6-4A05-AC21-9DBDAF131746} = {B3C07F96-0230-4CFF-A1A7-EFC3213F4A39}
 		{B2B4DC26-3B47-4D11-B5C4-34C52EC5882D} = {B3C07F96-0230-4CFF-A1A7-EFC3213F4A39}
 		{6C0B01C7-CEAD-41C7-AAF1-BE892877941B} = {B3C07F96-0230-4CFF-A1A7-EFC3213F4A39}
+		{784AF2AD-AFA8-4518-9D9B-F381F23C98BD} = {B3C07F96-0230-4CFF-A1A7-EFC3213F4A39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02467E9F-99F1-4DF1-9F95-B88C4DA6051D}
